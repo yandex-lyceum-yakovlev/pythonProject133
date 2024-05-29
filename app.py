@@ -18,11 +18,11 @@ async def get_image():
         async with session.get(url) as response:
             if response.status == 200:
                 image_data = await response.read()
+                with open(f'image.jpg', 'wb') as file:
+                    file.write(image_data)
                 return send_file(
-                    io.BytesIO(image_data),
-                    mimetype='image/jpeg',
-                    as_attachment=False,
-                    attachment_filename='image.jpg'
+                    "image.jpg",
+                    mimetype='image/jpeg'
                 )
             else:
                 return jsonify({'error': 'Failed to retrieve image'}), 500
