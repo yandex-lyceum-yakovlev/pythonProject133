@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Async Image Loader</title>
+    <style>
+        .image-container {
+            width: 300px;
+            height: 300px;
+            background: url('/static/placeholder.jpg') no-repeat center center;
+            background-size: cover;
+        }
+        img {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container" id="image-container">
+        <img id="async-image" alt="Loaded Image" />
+    </div>
+    <script>
+        async function loadImage() {
+            try {
+                const response = await fetch('/get-image');
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const img = document.getElementById('async-image');
+                    const container = document.getElementById('image-container');
+                    img.src = URL.createObjectURL(blob);
+                    img.style.display = 'block';
+                    container.style.background = 'none';
+                } else {
+                    console.error('Failed to fetch image');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        window.onload = loadImage;
+    </script>
+</body>
+</html>
