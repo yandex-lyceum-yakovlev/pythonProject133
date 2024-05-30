@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_file, jsonify
 import aiohttp
 import asyncio
 import io
+from kandy import generate_image
 
 app = Flask(__name__)
 
@@ -17,9 +18,10 @@ async def get_image():
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             if response.status == 200:
-                image_data = await response.read()
-                with open(f'image.jpg', 'wb') as file:
-                    file.write(image_data)
+                # image_data = await response.read()
+                # with open(f'image.jpg', 'wb') as file:
+                #     file.write(image_data)
+                await generate_image("Ворона", "image.jpg")
                 return send_file(
                     "image.jpg",
                     mimetype='image/jpeg'
