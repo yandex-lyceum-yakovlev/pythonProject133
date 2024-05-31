@@ -67,10 +67,8 @@ class Text2ImageAPI:
             'model_id': (None, model),
             'params': (None, json.dumps(params), 'application/json')
         }
-        print(data)
         response = requests.post(self.URL + 'key/api/v1/text2image/run', headers=self.AUTH_HEADERS, files=data)
         data = response.json()
-        print(data)
         return data['uuid']
 
     async def check_generation(self, request_id, attempts=10, delay=10):
@@ -81,7 +79,6 @@ class Text2ImageAPI:
                     data = await response.json()
                     print(data['status'])
                     if data['status'] == 'DONE':
-                        print(data['images'])
                         return data['images']
                 attempts -= 1
                 await asyncio.sleep(delay)

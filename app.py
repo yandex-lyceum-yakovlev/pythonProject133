@@ -15,19 +15,10 @@ def index():
 
 @app.route('/get-image')
 async def get_image():
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            if response.status == 200:
-                # image_data = await response.read()
-                # with open(f'image.jpg', 'wb') as file:
-                #     file.write(image_data)
-                await generate_image("Ворона", "image.jpg")
-                return send_file(
-                    "image.jpg",
-                    mimetype='image/jpeg'
-                )
-            else:
-                return jsonify({'error': 'Failed to retrieve image'}), 500
-
+    await generate_image("Слон", "image.jpg")
+    return send_file(
+        "image.jpg",
+        mimetype='image/jpeg'
+    )
 if __name__ == '__main__':
     app.run(debug=True)
