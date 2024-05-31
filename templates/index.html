@@ -11,24 +11,15 @@
     </style>
 </head>
 <body>
-    <img id="async-image" src="/static/placeholder.jpg" alt="Loading Image" />
+    {% for img_id in images %}
+        <img id="async-image-{{ img_id }}" src="/static/placeholder.jpg" alt="Loading Image {{ img_id }}" />
+    {% endfor %}
     <script>
-         async function loadImage() {
-            try {
-                const response = await fetch('/get-image');
-                if (response.ok) {
-                    const blob = await response.blob();
-                    const img = document.getElementById('async-image');
-                    img.src = URL.createObjectURL(blob);
-                } else {
-                    console.error('Failed to fetch image');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
+    function loadAllImages() {
+            const images = {{ images|tojson }};
+            images.forEach(imgId => loadImage(imgId));
         }
-
-        window.onload = loadImage;
     </script>
+    <script src="static/js/candy.js"></script>
 </body>
 </html>
