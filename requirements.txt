@@ -1,0 +1,5 @@
+flask[async]
+pillow
+requests
+aiofiles
+aiohttp
